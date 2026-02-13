@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Portfolio | Business Informatics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] antialiased">
+<!-- Navigation -->
+<nav class="sticky top-0 z-50 glass-effect border-b border-primary/10">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="bg-primary p-2 rounded-lg">
+<svg class="w-6 h-6 text-white" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="text-xl font-bold tracking-tight text-primary">Portfolio.BI</span>
+</div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#home">Home</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#journey">Journey</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#skills">Skills</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#projects">Projects</a>
+<a class="px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20" href="#contact">Contact Me</a>
+</div>
+</div>
+</nav>
+<main>
+<!-- Hero Section: Split Montage -->
+<section class="relative w-full h-[85vh] flex items-center overflow-hidden" id="home">
+<div class="absolute inset-0 flex flex-col md:flex-row">
+<!-- Dubai Half -->
+<div class="relative w-full md:w-1/2 h-1/2 md:h-full group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Modern Dubai skyline with skyscrapers and corporate buildings" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAYkfuF8_N3_Y1laEd7K4cT_-kTu4FHYZRFSDW3B6DRjJd8Bi2u-dT-ZKfw3AkVroQ75JLAss9wRB4snayL1cMVUB50T_ktMrx5H5WYGCzQDUAmrN7TWZ6NWVMAyIegLQ_XY6IcjzweZGVS0M_RgogIrEIye6EGytR3Eul0TnPke1wRJfhiOoLcANb0CjLD038l6qXF1nzIsKXmn5oncL-K3vv64QKiXYFt5RMJBl2SaDOpUtjBa_o3f92lZK-TMD7TLaFpVF-FGLM');"></div>
+<div class="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-background-dark/60 via-transparent to-transparent"></div>
+<div class="absolute bottom-10 left-10 text-white z-10 hidden md:block">
+<p class="text-xs uppercase tracking-[0.3em] font-bold opacity-80 mb-2">The Foundation</p>
+<h3 class="text-2xl font-bold">Corporate Dubai</h3>
+</div>
+</div>
+<!-- NZ Half -->
+<div class="relative w-full md:w-1/2 h-1/2 md:h-full group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Scenic New Zealand landscape with mountains and universities" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDPj-2WnWXfXRYDx_KlJu7AvJ4jxkXoEDlawJc1Ps2rtvR3SX_7lRee9QfSxtW6elQ0lpd0aeM0sbYN3YRfS1Ac-x3W8PL8v_Pt_zV0Jwotl-4y0Hzzb7Nt39oiYDlLUHvqOIjQXF9GlS0DuV-pp3dwKYGLay60L3eYvHmJSRT0vCaQ3PQ7kmPgnPQ4UoQrtLPeypotwfzSsAM-RSigwVYSFXQIlOEeTSdELczLZcPttoADhZWnodagaMrEG00KkKPbOl_0i1YDOhg');"></div>
+<div class="absolute inset-0 bg-primary/10 mix-blend-multiply border-l border-white/10"></div>
+<div class="absolute inset-0 bg-gradient-to-l from-background-dark/60 via-transparent to-transparent"></div>
+<div class="absolute bottom-10 right-10 text-white text-right z-10 hidden md:block">
+<p class="text-xs uppercase tracking-[0.3em] font-bold opacity-80 mb-2">The Specialization</p>
+<h3 class="text-2xl font-bold">Academic NZ</h3>
+</div>
+</div>
+</div>
+<!-- Hero Overlay Content -->
+<div class="relative z-20 max-w-7xl mx-auto px-6 w-full pointer-events-none">
+<div class="max-w-3xl pointer-events-auto bg-white/95 p-8 md:p-12 rounded-2xl shadow-2xl border border-primary/5">
+<h1 class="text-4xl md:text-6xl font-black text-[#111318] leading-[1.1] mb-6 tracking-tight">
+                        Bridging Business <span class="text-primary">&amp; Technology</span>
+</h1>
+<p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                        A strategic journey of professional growth in Dubai's corporate landscape transitioning to advanced academic excellence in New Zealand, specializing in Business Informatics.
+                    </p>
+<div class="flex flex-wrap gap-4">
+<a class="px-8 py-4 bg-primary text-white font-bold rounded-xl hover:translate-y-[-2px] transition-all shadow-xl shadow-primary/30" href="#projects">View My Work</a>
+<a class="px-8 py-4 border-2 border-primary/20 text-primary font-bold rounded-xl hover:bg-primary/5 transition-all" href="#journey">My Story</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Journey Section -->
+<section class="py-24 bg-white" id="journey">
+<div class="max-w-5xl mx-auto px-6">
+<div class="text-center mb-16">
+<h2 class="text-3xl font-bold mb-4">The Professional Evolution</h2>
+<div class="w-16 h-1.5 bg-primary mx-auto rounded-full"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 items-center">
+<div class="text-right md:pr-10">
+<h4 class="text-xl font-bold text-primary mb-2">Dubai Era</h4>
+<p class="text-slate-600 leading-relaxed">Managed high-stakes corporate operations, focused on process optimization and digital transformation within international business hubs. Developed core expertise in ERP management and team leadership.</p>
+</div>
+<div class="hidden md:flex flex-col items-center">
+<div class="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">corporate_fare</span>
+</div>
+<div class="w-0.5 h-24 bg-gradient-to-b from-primary/10 via-primary to-primary/10 my-4"></div>
+<div class="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">school</span>
+</div>
+</div>
+<div class="md:pl-10">
+<h4 class="text-xl font-bold text-primary mb-2">New Zealand Pursuit</h4>
+<p class="text-slate-600 leading-relaxed">Master's in Business Informatics at a leading NZ University. Bridging the gap between data strategy and business intelligence, focusing on advanced analytics and cloud architecture.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Skills Section -->
+<section class="py-24 bg-background-light" id="skills">
+<div class="max-w-7xl mx-auto px-6">
+<div class="mb-16">
+<h2 class="text-3xl font-bold mb-2">Core Competencies</h2>
+<p class="text-slate-500">Expertise spanning business strategy and technical implementation.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Technical -->
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-primary/5 hover:shadow-md transition-shadow">
+<div class="size-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6">
+<span class="material-symbols-outlined text-3xl">database</span>
+</div>
+<h3 class="text-xl font-bold mb-4">Technical Stack</h3>
+<ul class="space-y-3">
+<li class="flex items-center gap-2 text-slate-600 font-medium">
+<span class="size-2 rounded-full bg-primary"></span> SQL &amp; Data Modeling
+                            </li>
+<li class="flex items-center gap-2 text-slate-600 font-medium">
+<span class="size-2 rounded-full bg-primary"></span> Python for Data Science
+                            </li>
+<li class="flex items-center gap-2 text-slate-600 font-medium">
+<span class="size-2 rounded-full bg-primary"></span> PowerBI &amp; Tableau
+                            </li>
+<li class="flex items-center gap-2 text-slate-600 font-medium">
+<span class="size-2 rounded-full bg-primary"></span> Cloud Architecture (AWS)
+                            </li>
+</ul>
+</div>
+<!-- Business -->
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-primary/5 hover:shadow-md transition-shadow">
+<div class="size-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6">
+<span class="material-symbols-outlined text-3xl">insights</span>
+</div>
+<h3 class="text-xl font-bold mb-4">Business Strategy</h3>
+<ul class="space-y-3">
+<li class="flex items-center gap-2 text-slate-600 font-medium">
+<span class="size-2 rounded-full bg-primary"></span> Process Optimization
+                            </li>
+<li class="flex items-center gap-2 text-slate-600 font-medium">
+<span class="size-2 rounded-full bg-primary"></span> ERP Implementation
+                            </li>
+<li class="flex items-center gap-2 text-slate-600 font-medium">
+<span class="size-2 rounded-full bg-primary"></span> Change Management
+                            </li>
+<li class="flex items-center gap-2 text-slate-600 font-medium">
+<span class="size-2 rounded-full bg-primary"></span> Strategic Analysis
+                            </li>
+</ul>
+</div>
+<!-- Soft Skills -->
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-primary/5 hover:shadow-md transition-shadow">
+<div class="size-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6">
+<span class="material-symbols-outlined text-3xl">diversity_3</span>
+</div>
+<h3 class="text-xl font-bold mb-4">Professionalism</h3>
+<ul class="space-y-3">
+<li class="flex items-center gap-2 text-slate-600 font-medium">
+<span class="size-2 rounded-full bg-primary"></span> Stakeholder Engagement
+                            </li>
+<li class="flex items-center gap-2 text-slate-600 font-medium">
+<span class="size-2 rounded-full bg-primary"></span> Cross-Cultural Communication
+                            </li>
+<li class="flex items-center gap-2 text-slate-600 font-medium">
+<span class="size-2 rounded-full bg-primary"></span> Project Leadership
+                            </li>
+<li class="flex items-center gap-2 text-slate-600 font-medium">
+<span class="size-2 rounded-full bg-primary"></span> Agile Methodologies
+                            </li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Projects Gallery -->
+<section class="py-24 bg-white" id="projects">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<h2 class="text-3xl font-bold mb-2">Featured Projects</h2>
+<p class="text-slate-500">Real-world applications of Business Informatics principles.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-4 py-2 bg-primary/10 text-primary font-bold rounded-lg text-sm">All</button>
+<button class="px-4 py-2 hover:bg-slate-100 font-bold rounded-lg text-sm text-slate-500">Analytics</button>
+<button class="px-4 py-2 hover:bg-slate-100 font-bold rounded-lg text-sm text-slate-500">Strategy</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Project 1 -->
+<div class="group border border-slate-100 rounded-2xl overflow-hidden hover:border-primary/20 transition-all hover:shadow-xl">
+<div class="aspect-video bg-slate-100 relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Data dashboard showing ERP performance metrics" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDIehLrUyVJw5UQ2LG7zYBP6bdW5gWk9YQUCgRLBGoJ94vwYAR0sztKA473Q_dnfNvZRiXEy24I4s4YwB92hviv9xqWwjjgSSQYxNerLkudI_TiRt6bMr2UwbhDuNIMyYRAc97MEeJtMlpKlAX-elNoOdTCIpHvu9pCEJg4-8nok7uzsFt9tO8FzMqWTaBIbwOUSsJ7lxvU6lvzcnIXKoKXiureJ2ppv0eOVqBAJvpFew_SocSs2KO9b2wKh84g5AdMbBJCAFORIq8');"></div>
+<div class="absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-primary">ERP Strategy</div>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold mb-2 group-hover:text-primary transition-colors">ERP Implementation Framework</h3>
+<p class="text-sm text-slate-500 mb-4 line-clamp-2">Optimizing supply chain processes for a multinational retailer using SAP S/4HANA modeling techniques.</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded uppercase">SAP</span>
+<span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded uppercase">Analysis</span>
+</div>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="group border border-slate-100 rounded-2xl overflow-hidden hover:border-primary/20 transition-all hover:shadow-xl">
+<div class="aspect-video bg-slate-100 relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Conceptual data flow diagram for business intelligence" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCa-RFucT1H2o-1j_F8evGMYLW_AWfAZaxXFapOIUVdO1HKyIElV4mQNs9tCxDu2YcShEP9Qg3vlFFp2ORBMzhZTNL52_tjCgm7_lZQ0UzzjQKAGB_Y2UMFOW3TmwG-z4-jr9aG5bDITV3MIY5GiY85HGtbdANTYAB7HT8beLgor5GJugeBCr8FZgX4WkXFbvyP5xhNeslrKe8-qH56tyfSyAO8y2l__wMYwhcEJJ8YkS1uMXULDC2j3nqSqpH_KEQu0KYgoCwpq_o');"></div>
+<div class="absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-primary">Data Science</div>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold mb-2 group-hover:text-primary transition-colors">NZ Market Entry Analytics</h3>
+<p class="text-sm text-slate-500 mb-4 line-clamp-2">Quantitative research on New Zealand's tech sector using Python for predictive market trend analysis.</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded uppercase">Python</span>
+<span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded uppercase">PowerBI</span>
+</div>
+</div>
+</div>
+<!-- Project 3 -->
+<div class="group border border-slate-100 rounded-2xl overflow-hidden hover:border-primary/20 transition-all hover:shadow-xl">
+<div class="aspect-video bg-slate-100 relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Digital transformation roadmap illustration" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBLRDOoFXHmZoMk3v7Cw1iWGdaFgFgDn0g4VLZQNj-FZzLFF0EloIUarBddDzHRCPuXYo28FvqDK2vl5vRuTrp4Q6BaGBmqt7HnO1v7ATxLVBckukUYuEx-PbyZmYGk2ADwfpEFoyAele8EACjzNXQsPHCYGfPU--XsKvmYCm4E7pKqXwIEh7DTrAk-4u9RCGXXisBjmHqr_UOOhJTADmBwFmqU99HIL626EFoH-q0YXC_1lUyBHe3XHdOvmUl9IzBbwahn9poXd3Q');"></div>
+<div class="absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-primary">Informatics</div>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold mb-2 group-hover:text-primary transition-colors">Digital Health Transformation</h3>
+<p class="text-sm text-slate-500 mb-4 line-clamp-2">A proposed informatics framework for securing patient data flow between NZ regional healthcare providers.</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded uppercase">Security</span>
+<span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded uppercase">Strategy</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="py-24 bg-background-dark text-white relative overflow-hidden" id="contact">
+<div class="absolute top-0 right-0 w-1/3 h-full bg-primary/5 -skew-x-12 transform translate-x-1/2"></div>
+<div class="max-w-7xl mx-auto px-6 relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div>
+<h2 class="text-4xl font-black mb-6">Let's Connect</h2>
+<p class="text-slate-400 text-lg mb-10 leading-relaxed">
+                            I am currently looking for opportunities where I can leverage my international business background and technical informatics expertise. Whether it's a project collaboration or a professional query, I'd love to hear from you.
+                        </p>
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div>
+<p class="text-sm text-slate-400">Email Me</p>
+<p class="font-bold">hello@portfolio.bi</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div data-location="Auckland, New Zealand" style="">
+<p class="text-sm text-slate-400">Based in</p>
+<p class="font-bold">Auckland, New Zealand</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white p-8 md:p-10 rounded-3xl shadow-2xl">
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-wider text-slate-500">Name</label>
+<input class="w-full bg-slate-50 border-none rounded-xl p-4 text-slate-900 focus:ring-2 focus:ring-primary/20" placeholder="John Doe" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-wider text-slate-500">Email</label>
+<input class="w-full bg-slate-50 border-none rounded-xl p-4 text-slate-900 focus:ring-2 focus:ring-primary/20" placeholder="john@example.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-wider text-slate-500">Subject</label>
+<input class="w-full bg-slate-50 border-none rounded-xl p-4 text-slate-900 focus:ring-2 focus:ring-primary/20" placeholder="Collaboration Inquiry" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-wider text-slate-500">Message</label>
+<textarea class="w-full bg-slate-50 border-none rounded-xl p-4 text-slate-900 focus:ring-2 focus:ring-primary/20" placeholder="How can I help you?" rows="4"></textarea>
+</div>
+<button class="w-full py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/30 hover:shadow-xl hover:translate-y-[-1px] transition-all" type="submit">Send Message</button>
+</form>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="py-12 bg-background-dark border-t border-white/5 text-center">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex items-center justify-center gap-3 mb-6">
+<div class="bg-primary/20 p-1.5 rounded-md">
+<svg class="w-5 h-5 text-primary" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="text-lg font-bold tracking-tight text-white">Portfolio.BI</span>
+</div>
+<p class="text-slate-500 text-sm">© 2024. All rights reserved. Bridging Business &amp; Tech across continents.</p>
+</div>
+</footer>
+</body></html>
