@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>a2MC Regulatory Tracker</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><b>a2MC Regulatory Tracker</b><span>Quality Team</span></div>
+    <div class="right"><button class="tog" id="settingsBtn">Settings</button><span id="who"></span></div>
+  </header>
+  <nav class="rail" aria-label="Main">
+    <button data-go="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>Home</button>
+    <button data-go="history"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>History</button>
+    <button data-go="insights"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Insights</button>
+    <button data-go="actions"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>Actions</button>
+    <button data-go="add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add update</button>
+  </nav>
+  <main id="main"></main>
+</div>
+
+<dialog id="settings">
+  <form method="dialog" class="f" style="max-width:none">
+    <h1 style="font-size:19px">Settings and data</h1>
+    <label>Your name<input id="s-name" autocomplete="name"></label>
+    <p class="m" style="margin:0">Updates you lead appear under "Needs you". Data is saved in this browser only. Use export to back up or move it to another device.</p>
+    <div class="btns" style="margin:0">
+      <button type="button" class="btn" id="exJson">Export backup (JSON)</button>
+      <button type="button" class="btn" id="imJson">Import backup</button>
+      <button type="button" class="btn" id="exCsv">Export updates (CSV)</button>
+      <button type="button" class="btn" id="imCsv">Import updates (CSV)</button>
+    </div>
+    <div class="btns" style="margin:0">
+      <button type="button" class="btn" id="sample">Load sample data</button>
+      <button type="button" class="btn d" id="wipe">Delete all data</button>
+    </div>
+    <div class="btns" style="margin:0;justify-content:flex-end"><button class="btn p" value="close">Done</button></div>
+  </form>
+</dialog>
+<input type="file" id="file" hidden>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
