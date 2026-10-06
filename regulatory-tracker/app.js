@@ -24,7 +24,7 @@ const MARKET_LABEL = {NZ:'New Zealand',AU:'Australia',CN:'China',SK:'South Korea
 /* ---------- storage ---------- */
 const KEY = 'a2mc-data-v1';
 const Store = {
-  data:{items:[],actions:[],settings:{name:''},seq:1},
+  data:{items:[],actions:[],settings:{name:'',mailKey:''},seq:1},
   load(){ try{ const r=localStorage.getItem(KEY); if(r) this.data=Object.assign(this.data,JSON.parse(r)); }catch(e){} },
   save(){ try{ localStorage.setItem(KEY,JSON.stringify(this.data)); }catch(e){ toast('Could not save: browser storage is unavailable.'); } },
   nextId(){ return this.data.seq++; }
@@ -45,6 +45,12 @@ const overdue = i=> i.resp && i.status!=='Closed' && i.resp<todayISO();
 const me = ()=>Store.data.settings.name.trim();
 const isMine = n=>me() && String(n||'').trim().toLowerCase()===me().toLowerCase();
 const countryFor = m=> m==='NZ'?'NZ': m==='AU'?'AU':'EM Others';
+async function sendMail(subject,message){
+  const key=(Store.data.settings.mailKey||'').trim(); if(!key) return {skipped:true};
+  try{ const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({access_key:key,subject,from_name:'a2MC Regulatory Tracker',message})});
+    const j=await r.json(); return j.success?{ok:true}:{error:j.message||'Send failed'}; }
+  catch(e){ return {error:'Network error'}; }
+}
 function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2600);}
 function download(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
 
@@ -221,7 +227,7 @@ function alertText(i){
 }
 function add(el){
   if(done){ const i=done, who=ROUTE[i.cat]||[];
-    el.innerHTML=`<h1>${editId?'Update saved':'Update added'}</h1><p class="sub">${pill(i.impact)} ${esc(i.title)}</p><div class="card"><div class="t">Who to notify</div><p class="m" style="margin:4px 0 10px">${i.impact==='No'?'No alert is needed for Impact: No.':'This app does not send messages itself. Copy the alert or open an email draft, then send it to:'}</p>${i.impact==='No'?'':`<div class="list">${who.map(p=>`<div class="item" style="grid-template-columns:minmax(0,1fr)"><span>${esc(p)}</span></div>`).join('')}</div><div class="btns" style="grid-column:auto"><button class="btn" id="cp">Copy alert text</button><a class="btn" id="ml" href="mailto:?subject=${encodeURIComponent((i.impact==='Major'?'[Major] ':'')+i.title)}&body=${encodeURIComponent(alertText(i))}">Open email draft</a></div>`}</div>
+    el.innerHTML=`<h1>${editId?'Update saved':'Update added'}</h1><p class="sub">${pill(i.impact)} ${esc(i.title)}</p><div class="card"><div class="t">Who to notify</div><p class="m" style="margin:4px 0 10px">${i.impact==='No'?'No alert is needed for Impact: No.':((Store.data.settings.mailKey||'').trim()?'A test alert email was sent to your registered address. Intended recipients:':'No email key is set (see Settings). Copy the alert or open an email draft, then send it to:')}</p>${i.impact==='No'?'':`<div class="list">${who.map(p=>`<div class="item" style="grid-template-columns:minmax(0,1fr)"><span>${esc(p)}</span></div>`).join('')}</div><div class="btns" style="grid-column:auto"><button class="btn" id="cp">Copy alert text</button><a class="btn" id="ml" href="mailto:?subject=${encodeURIComponent((i.impact==='Major'?'[Major] ':'')+i.title)}&body=${encodeURIComponent(alertText(i))}">Open email draft</a></div>`}</div>
     <div class="btns" style="grid-column:auto"><button class="btn p" id="again">Add another</button><button class="btn" id="hist">View in History</button></div>`;
     const cp=$('#cp'); if(cp) cp.onclick=async()=>{try{await navigator.clipboard.writeText(alertText(i));toast('Alert text copied.');}catch(e){toast('Copy failed.');}};
     $('#again').onclick=()=>{done=null;editId=null;step=1;draft={};render();};
@@ -259,7 +265,11 @@ function add(el){
     let it;
     if(editId){ it=ITEMS.find(x=>x.id===editId); Object.assign(it,fields); }
     else { it={id:Store.nextId(),status:'Open',...fields}; ITEMS.unshift(it); }
-    persist(); done=it;draft={};step=1;render(); };
+    persist(); done=it;draft={};step=1;
+    if(it.impact!=='No'&&!editId&&(Store.data.settings.mailKey||'').trim()){
+      sendMail((it.impact==='Major'?'[Major] ':'')+it.title,alertText(it)+'\n\nNotify: '+(ROUTE[it.cat]||[]).join(', ')).then(r=>toast(r.ok?'Alert email sent.':'Alert email failed: '+(r.error||'')));
+    }
+    render(); };
 }
 
 /* ---------- Settings, import / export ---------- */
@@ -317,8 +327,9 @@ function loadSample(){
   persist();render();toast('Sample data added.');
 }
 const dlg=$('#settings');
-$('#settingsBtn').onclick=()=>{$('#s-name').value=me();dlg.showModal();};
-dlg.addEventListener('close',()=>{Store.data.settings.name=$('#s-name').value.trim();persist();render();});
+$('#settingsBtn').onclick=()=>{$('#s-name').value=me();$('#s-key').value=Store.data.settings.mailKey||'';dlg.showModal();};
+$('#testMail').onclick=async()=>{Store.data.settings.mailKey=$('#s-key').value.trim();persist();if(!Store.data.settings.mailKey)return toast('Paste your access key first.');toast('Sending...');const r=await sendMail('a2MC Regulatory Tracker test','This is a test alert from the tracker.');toast(r.ok?'Test email sent. Check your inbox.':'Failed: '+(r.error||''));};
+dlg.addEventListener('close',()=>{Store.data.settings.name=$('#s-name').value.trim();Store.data.settings.mailKey=$('#s-key').value.trim();persist();render();});
 $('#exJson').onclick=()=>download('a2mc-tracker-backup-'+todayISO()+'.json',JSON.stringify(Store.data,null,2),'application/json');
 $('#exCsv').onclick=()=>download('a2mc-updates-'+todayISO()+'.csv',[CSV_COLS.join(',')].concat(ITEMS.map(i=>CSV_COLS.map(c=>csvCell(i[c])).join(','))).join('\r\n'),'text/csv');
 $('#imJson').onclick=()=>pickFile('.json,application/json',importJSON);
