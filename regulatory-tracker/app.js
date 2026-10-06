@@ -24,7 +24,7 @@ const MARKET_LABEL = {NZ:'New Zealand',AU:'Australia',CN:'China',SK:'South Korea
 /* ---------- storage ---------- */
 const KEY = 'a2mc-data-v1';
 const Store = {
-  data:{items:[],actions:[],settings:{name:'',mailKey:''},seq:1},
+  data:{items:[],actions:[],settings:{name:'',mailKey:'',flowUrl:''},seq:1},
   load(){ try{ const r=localStorage.getItem(KEY); if(r) this.data=Object.assign(this.data,JSON.parse(r)); }catch(e){} },
   save(){ try{ localStorage.setItem(KEY,JSON.stringify(this.data)); }catch(e){ toast('Could not save: browser storage is unavailable.'); } },
   nextId(){ return this.data.seq++; }
@@ -45,6 +45,14 @@ const overdue = i=> i.resp && i.status!=='Closed' && i.resp<todayISO();
 const me = ()=>Store.data.settings.name.trim();
 const isMine = n=>me() && String(n||'').trim().toLowerCase()===me().toLowerCase();
 const countryFor = m=> m==='NZ'?'NZ': m==='AU'?'AU':'EM Others';
+async function sendFlow(it,test){
+  const url=(Store.data.settings.flowUrl||'').trim(); if(!url) return {skipped:true};
+  const payload=test?{test:true,title:'Test from a2MC Regulatory Tracker',impact:'Minor',cat:'Labelling',market:'NZ',country:'NZ',type:'Regulation',rel:todayISO(),resp:'',lead:me(),link:'',sum:'Test payload',notify:ROUTE.Labelling,text:'Test alert'}
+    :{test:false,id:it.id,title:it.title,impact:it.impact,cat:it.cat,market:it.market,country:it.country,type:it.type,rel:it.rel,resp:it.resp,lead:it.lead,link:it.link,sum:it.sum,meet:it.meet,notify:ROUTE[it.cat]||[],text:alertText(it)};
+  try{ /* text/plain + no-cors avoids a CORS preflight the flow endpoint rejects; response is opaque, so a sent request is the best confirmation */
+    await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)}); return {ok:true}; }
+  catch(e){ return {error:'Network error'}; }
+}
 async function sendMail(subject,message){
   const key=(Store.data.settings.mailKey||'').trim(); if(!key) return {skipped:true};
   try{ const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({access_key:key,subject,from_name:'a2MC Regulatory Tracker',message})});
@@ -227,7 +235,7 @@ function alertText(i){
 }
 function add(el){
   if(done){ const i=done, who=ROUTE[i.cat]||[];
-    el.innerHTML=`<h1>${editId?'Update saved':'Update added'}</h1><p class="sub">${pill(i.impact)} ${esc(i.title)}</p><div class="card"><div class="t">Who to notify</div><p class="m" style="margin:4px 0 10px">${i.impact==='No'?'No alert is needed for Impact: No.':((Store.data.settings.mailKey||'').trim()?'A test alert email was sent to your registered address. Intended recipients:':'No email key is set (see Settings). Copy the alert or open an email draft, then send it to:')}</p>${i.impact==='No'?'':`<div class="list">${who.map(p=>`<div class="item" style="grid-template-columns:minmax(0,1fr)"><span>${esc(p)}</span></div>`).join('')}</div><div class="btns" style="grid-column:auto"><button class="btn" id="cp">Copy alert text</button><a class="btn" id="ml" href="mailto:?subject=${encodeURIComponent((i.impact==='Major'?'[Major] ':'')+i.title)}&body=${encodeURIComponent(alertText(i))}">Open email draft</a></div>`}</div>
+    el.innerHTML=`<h1>${editId?'Update saved':'Update added'}</h1><p class="sub">${pill(i.impact)} ${esc(i.title)}</p><div class="card"><div class="t">Who to notify</div><p class="m" style="margin:4px 0 10px">${i.impact==='No'?'No alert is needed for Impact: No.':(((Store.data.settings.flowUrl||'').trim())?'The update was sent to your Power Automate flow. Intended recipients:':(Store.data.settings.mailKey||'').trim()?'A test alert email was sent to your registered address. Intended recipients:':'No email key is set (see Settings). Copy the alert or open an email draft, then send it to:')}</p>${i.impact==='No'?'':`<div class="list">${who.map(p=>`<div class="item" style="grid-template-columns:minmax(0,1fr)"><span>${esc(p)}</span></div>`).join('')}</div><div class="btns" style="grid-column:auto"><button class="btn" id="cp">Copy alert text</button><a class="btn" id="ml" href="mailto:?subject=${encodeURIComponent((i.impact==='Major'?'[Major] ':'')+i.title)}&body=${encodeURIComponent(alertText(i))}">Open email draft</a></div>`}</div>
     <div class="btns" style="grid-column:auto"><button class="btn p" id="again">Add another</button><button class="btn" id="hist">View in History</button></div>`;
     const cp=$('#cp'); if(cp) cp.onclick=async()=>{try{await navigator.clipboard.writeText(alertText(i));toast('Alert text copied.');}catch(e){toast('Copy failed.');}};
     $('#again').onclick=()=>{done=null;editId=null;step=1;draft={};render();};
@@ -266,6 +274,9 @@ function add(el){
     if(editId){ it=ITEMS.find(x=>x.id===editId); Object.assign(it,fields); }
     else { it={id:Store.nextId(),status:'Open',...fields}; ITEMS.unshift(it); }
     persist(); done=it;draft={};step=1;
+    if(it.impact!=='No'&&!editId&&(Store.data.settings.flowUrl||'').trim()){
+      sendFlow(it).then(r=>toast(r.ok?'Sent to Power Automate.':'Flow call failed: '+(r.error||'')));
+    }
     if(it.impact!=='No'&&!editId&&(Store.data.settings.mailKey||'').trim()){
       sendMail((it.impact==='Major'?'[Major] ':'')+it.title,alertText(it)+'\n\nNotify: '+(ROUTE[it.cat]||[]).join(', ')).then(r=>toast(r.ok?'Alert email sent.':'Alert email failed: '+(r.error||'')));
     }
@@ -327,9 +338,10 @@ function loadSample(){
   persist();render();toast('Sample data added.');
 }
 const dlg=$('#settings');
-$('#settingsBtn').onclick=()=>{$('#s-name').value=me();$('#s-key').value=Store.data.settings.mailKey||'';dlg.showModal();};
+$('#settingsBtn').onclick=()=>{$('#s-name').value=me();$('#s-key').value=Store.data.settings.mailKey||'';$('#s-flow').value=Store.data.settings.flowUrl||'';dlg.showModal();};
+$('#testFlow').onclick=async()=>{Store.data.settings.flowUrl=$('#s-flow').value.trim();persist();if(!Store.data.settings.flowUrl)return toast('Paste the flow URL first.');const r=await sendFlow(null,true);toast(r.ok?'Test sent. Check the flow run history.':'Failed: '+(r.error||''));};
 $('#testMail').onclick=async()=>{Store.data.settings.mailKey=$('#s-key').value.trim();persist();if(!Store.data.settings.mailKey)return toast('Paste your access key first.');toast('Sending...');const r=await sendMail('a2MC Regulatory Tracker test','This is a test alert from the tracker.');toast(r.ok?'Test email sent. Check your inbox.':'Failed: '+(r.error||''));};
-dlg.addEventListener('close',()=>{Store.data.settings.name=$('#s-name').value.trim();Store.data.settings.mailKey=$('#s-key').value.trim();persist();render();});
+dlg.addEventListener('close',()=>{Store.data.settings.name=$('#s-name').value.trim();Store.data.settings.mailKey=$('#s-key').value.trim();Store.data.settings.flowUrl=$('#s-flow').value.trim();persist();render();});
 $('#exJson').onclick=()=>download('a2mc-tracker-backup-'+todayISO()+'.json',JSON.stringify(Store.data,null,2),'application/json');
 $('#exCsv').onclick=()=>download('a2mc-updates-'+todayISO()+'.csv',[CSV_COLS.join(',')].concat(ITEMS.map(i=>CSV_COLS.map(c=>csvCell(i[c])).join(','))).join('\r\n'),'text/csv');
 $('#imJson').onclick=()=>pickFile('.json,application/json',importJSON);
